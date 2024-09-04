@@ -1,0 +1,116 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+	<moduleName>Animated Ingestibles - B42 Inject Patch</moduleName>
+	<installSteps order="Explicit">
+		<installStep name="Animated Ingestibles - B42 Inject Patch">
+			<optionalFileGroups order="Explicit">
+				<group name="Main File" type="SelectAtLeastOne">
+					<plugins order="Explicit">
+						<plugin name="Required">
+							<description>Animated Ingestibles - B42 Inject Patch core files.</description>
+							<files>
+								<folder source="Required" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Recommended"/>
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+				<group name="Mod Support" type="SelectAny">
+					<plugins order="Explicit">
+						<plugin name="JSawyer Ultimate Edition">
+							<description>Select if you use JSawyer Ultimate Edition.</description>
+							<files>
+								<folder source="Optional\JSawyer Ultimate" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<dependencyType>
+									<defaultType name="Optional"/>
+									<patterns>
+										<pattern>
+											<dependencies operator="And">
+												<fileDependency file="JSawyer Ultimate.esp" state="Active"/>
+											</dependencies>
+											<type name="Recommended"/>
+										</pattern>
+									</patterns>
+								</dependencyType>
+							</typeDescriptor>
+						</plugin>
+						<plugin name="SawyerBatty">
+							<description>Select if you use SawyerBatty.</description>
+							<files>
+								<folder source="Optional\SawyerBatty" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<dependencyType>
+									<defaultType name="Optional"/>
+									<patterns>
+										<pattern>
+											<dependencies operator="And">
+												<fileDependency file="sawyerbatty.esp" state="Active"/>
+											</dependencies>
+											<type name="Recommended"/>
+										</pattern>
+									</patterns>
+								</dependencyType>
+							</typeDescriptor>
+						</plugin>
+						<plugin name="Vigor">
+							<description>Select if you use Vigor.</description>
+							<files>
+								<folder source="Optional\Vigor" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<dependencyType>
+									<defaultType name="Optional"/>
+									<patterns>
+										<pattern>
+											<dependencies operator="And">
+												<fileDependency file="Vigor.esp" state="Active"/>
+											</dependencies>
+											<type name="Recommended"/>
+										</pattern>
+									</patterns>
+								</dependencyType>
+							</typeDescriptor>
+						</plugin>
+						<plugin name="Lone Star">
+							<description>Select if you use Lone Star.</description>
+							<files>
+								<folder source="Optional\Lone Star" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<dependencyType>
+									<defaultType name="Optional"/>
+									<patterns>
+										<pattern>
+											<dependencies operator="And">
+												<fileDependency file="Lone Star.esm" state="Active"/>
+											</dependencies>
+											<type name="Recommended"/>
+										</pattern>
+									</patterns>
+								</dependencyType>
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+				<group name="Optional" type="SelectAny">
+					<plugins order="Explicit">
+						<plugin name="Animation Customizer">
+							<description>Scriptrunner enabling further customization on which animations are disabled.&#13;&#10;
+Instructions included in the B42Patch.ini. Advanced users only.</description>
+							<files>
+								<folder source="Optional\Scriptrunner" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Optional"/>
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+			</optionalFileGroups>
+		</installStep>
+	</installSteps>
+</config>

@@ -1,0 +1,80 @@
+; Animated Ingestibles - B42 Inject Patch 1.9 - Stentorious
+if GetINIFloat "General:bRunOnStartup" "zebumper\B42Patch.ini" == 1
+
+	int iAnimTemplate = 0
+	int iUseB42PA1st = GetINIFloat "General:bUseB42PA1st" "zebumper\B42Patch.ini"
+	int iUseB42PA3rd = GetINIFloat "General:bUseB42PA3rd" "zebumper\B42Patch.ini"
+	array_var aB42Item = Ar_Construct "stringmap"
+	string_var sB42Item = ""
+
+	PrintC "Animated Ingestibles - B42 Inject Patch starting..."
+	PrintC "Setting _Tech.ini values..."
+
+	; Set item _Tech.ini files to use configured animation templates
+	foreach aB42Item <- (GetINISection "Animations" "zebumper\B42Patch.ini" 1)
+
+		sB42Item = aB42Item["key"]
+		iAnimTemplate = *aB42Item
+
+		if iAnimTemplate == 0
+			SetINIString ("Ingestibles:" + sB42Item) (GetINIString ("Default:" + sB42Item) "zebumper\B42PatchTemplates.ini") ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+		elseif iAnimTemplate == 1
+			if iUseB42PA1st == 1
+				SetINIString ("Ingestibles:" + sB42Item) (GetINIString ("1st Person wPA:" + sB42Item) "zebumper\B42PatchTemplates.ini") ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+			else
+				SetINIString ("Ingestibles:" + sB42Item) (GetINIString ("1st Person woPA:" + sB42Item) "zebumper\B42PatchTemplates.ini") ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+			endif
+		elseif iAnimTemplate == 2
+			if iUseB42PA3rd == 1
+				SetINIString ("Ingestibles:" + sB42Item) (GetINIString ("3rd Person wPA:" + sB42Item) "zebumper\B42PatchTemplates.ini") ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+			else
+				SetINIString ("Ingestibles:" + sB42Item) (GetINIString ("3rd Person woPA:" + sB42Item) "zebumper\B42PatchTemplates.ini") ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+			endif
+		elseif iAnimTemplate == 3
+			SetINIString ("Ingestibles:" + sB42Item) "disable|me" ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "_Tech.ini")
+		endif
+
+	loop
+
+	PrintC "_Tech.ini values set successfully."
+
+	; Check if B42 Inject animations have corresponding _Tech.ini files and generate if missing
+	if GetINIFloat "Experimental:bAutoPatch" "zebumper\B42Patch.ini" == 1
+
+		PrintC "Auto Patching enabled. Checking for missing _Tech.ini files..."
+
+		array_var aB42Anim = GetFoldersInFolder "meshes\characters\_male\idleanims\B42Inject\0\1"
+		int iINIMissing = 0
+		int iIndex = -1
+		int iAnimSize = ar_size aB42Anim
+
+		while (iIndex += 1) < iAnimSize
+			sB42Item = aB42Anim[iIndex]
+			if FileExists ("config\zebumper\AnimatedIngestiblesItems\" + sB42Item + "EDID_Tech.ini") == 0 && GetType (EditorIDToFormID (sB42Item)) == 47
+				iINIMissing = 1
+				SetINIString ("Ingestibles:" + sB42Item + "EDID") "disable|me" ("zebumper\AnimatedIngestiblesItems\" + sB42Item + "EDID_Tech.ini")
+				PrintC ("Generating: " + sB42Item + "EDID_Tech.ini")
+			endif
+		loop
+
+		if iINIMissing == 1
+			PrintC "Auto Patching complete. All .ini files generated successfully."
+		else
+			PrintC "Auto Patching complete. No missing .ini files found."
+		endif
+
+		aB42Anim = ar_Null
+
+	endif
+
+	aB42Item = ar_Null
+	sv_Destruct sB42Item
+
+	PrintC "Animated Ingestibles - B42 Inject Patch finished!"
+	SetINIFloat "General:bRunOnStartup" 0 "zebumper\B42Patch.ini"
+
+else
+
+	PrintC "Animated Ingestibles - B42 Inject Patch disabled. Set bRunOnStartup=1 to enable."
+
+endif
